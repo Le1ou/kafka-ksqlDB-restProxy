@@ -1,4 +1,4 @@
-# Kafka, ksqlDB, REST Proxy, Conductor Console
+# Kafka, ksqlDB, REST Proxy, Conduktor Console
 
 Локальный Kafka-стек для изучения потоковой обработки данных и HTTP-интеграции с Kafka. Проект запускает готовое окружение с Kafka, Schema Registry, ksqlDB, Kafka REST Proxy и Conduktor Console.
 
@@ -8,24 +8,25 @@
 
 ## Состав
 
-| Компонент | Назначение | Локальный адрес |
-| --- | --- | --- |
-| Kafka | Хранение и доставка сообщений | `localhost:9092` |
-| ZooKeeper | Координация Kafka в используемой версии | `localhost:2181` |
-| Schema Registry | Хранение Avro, JSON Schema и Protobuf схем | `http://localhost:8081` |
-| Kafka REST Proxy | HTTP API для Kafka | `http://localhost:8082` |
-| ksqlDB Server | Потоковые SQL-запросы | `http://localhost:8088` |
-| Conduktor Console | Веб-интерфейс для работы с Kafka | `http://localhost:8080` |
-| PostgreSQL | Служебная база Conduktor | Только внутри Docker-сети |
+| Компонент | Docker-образ | Назначение | Локальный адрес |
+| --- | --- | --- | --- |
+| Kafka | `confluentinc/cp-kafka:7.3.0` | Хранение и доставка сообщений | `localhost:9092` |
+| ZooKeeper | `confluentinc/cp-zookeeper:7.3.0` | Координация Kafka в используемой версии | `localhost:2181` |
+| Schema Registry | `confluentinc/cp-schema-registry:7.3.0` | Хранение Avro, JSON Schema и Protobuf схем | `http://localhost:8081` |
+| Kafka REST Proxy | `confluentinc/cp-kafka-rest:7.3.0` | HTTP API для Kafka | `http://localhost:8082` |
+| ksqlDB Server | `confluentinc/cp-ksqldb-server:7.3.0` | Потоковые SQL-запросы | `http://localhost:8088` |
+| Conduktor Console | `conduktor/conduktor-console:1.43.3` | Веб-интерфейс для работы с Kafka | `http://localhost:8080` |
+| PostgreSQL | `postgres:14` | Служебная база Conduktor | Только внутри Docker-сети |
 
 Все компоненты запускаются одним `docker-compose.yml`.
+
+Версии образов зафиксированы в `docker-compose.yml`, чтобы окружение запускалось воспроизводимо. При обновлении рекомендуется менять версии компонентов Confluent согласованно.
 
 ## Требования
 
 - Docker Desktop или Docker Engine;
 - Docker Compose v2;
-- `curl`;
-- Node.js для загрузки учебных данных.
+- `curl`.
 
 ## Запуск
 
@@ -86,29 +87,10 @@ docker compose exec -T kafka \
   kafka-topics --bootstrap-server kafka:29092 --list
 ```
 
-## Учебные данные
-
-Для практических упражнений можно загрузить подготовленный набор товаров, заказов и изменений остатков:
-
-```bash
-./scripts/reset-lab.sh
-```
-
-Скрипт пересоздаёт пользовательские topics и загружает данные через Kafka REST Proxy:
-
-- `Items`;
-- `OrderChanges`;
-- `StockChanges`.
-
-Подробное описание находится в [docs/LAB_DATA.md](docs/LAB_DATA.md).
-
-> Скрипт удаляет пользовательские Kafka topics и объекты ksqlDB. Используйте его только с этим локальным стендом.
-
 ## Практические руководства
 
-- [Работа с ksqlDB и REST Proxy](docs/KSQLDB_AND_REST_PROXY_GUIDE.md) — Stream, Table, push/pull queries, CTAS, CSAS, repartition, агрегации, windowing, join и REST API;
-- [Kafka REST Proxy](docs/REST_PROXY_GUIDE.md) — JSON, Avro, Schema Registry, producer и consumer API;
-- [Учебные данные](docs/LAB_DATA.md) — подготовка и проверка исходных topics.
+- [Работа с ksqlDB](docs/KSQLDB_GUIDE.md) — Stream, Table, push/pull queries, CTAS, CSAS, repartition, агрегации, windowing и join;
+- [Kafka REST Proxy](docs/REST_PROXY_GUIDE.md) — JSON, Avro, Schema Registry, producer и consumer API.
 
 ## Полезные команды
 
