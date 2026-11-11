@@ -1,4 +1,4 @@
-# Kafka, ksqlDBб REST Proxy, Conductor Console
+# Kafka, ksqlDB, REST Proxy, Conductor Console
 
 Локальный Kafka-стек для изучения потоковой обработки данных и HTTP-интеграции с Kafka. Проект запускает готовое окружение с Kafka, Schema Registry, ksqlDB, Kafka REST Proxy и Conduktor Console.
 
