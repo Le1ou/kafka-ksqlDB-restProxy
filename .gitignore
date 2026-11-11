@@ -1,0 +1,17 @@
+.DS_Store
+
+.env
+.env.*
+!.env.example
+
+*.pem
+*.key
+*.crt
+*.p12
+*.jks
+
+data/
+volumes/
+logs/
+
+*.postman_environment.json
